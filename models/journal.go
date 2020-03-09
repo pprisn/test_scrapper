@@ -8,11 +8,13 @@ import (
 
 type Journal struct {
 	gorm.Model
-	Name    string `json:"name"`
-	Request string `json:"request"`
-	Timeout int    `json:"timeout"`
-	UrlId   int    `json:"urlid"`
-	UserId  uint   `json:"userid"` //ID of the user who submitted the request
+	Name    string  `json:"name";gorm:"varchar(100)"`
+	Request string  `json:"request"`
+	Timeout int     `json:"timeout"`
+	User    Account `gorm:"foreingkey:UserId"`
+	Urls    Urls    `gorm:"foreingkey:UrlId"`
+	UrlId   uint    `json:"urlid"`
+	UserId  uint    `json:"userid"` //ID of the user who submitted the request
 }
 
 /*
