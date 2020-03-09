@@ -48,6 +48,3 @@ INSERT INTO urls (name) values ('gt.co');
 INSERT INTO urls (name) values ('gbing.com');
 INSERT INTO urls (name) values ('gxvideos.com');
 INSERT INTO urls (name) values ('ggoogle.ca');
-INSERT INTO accounts (created_at,username,email,role) values (NOW(),'user1','user1@yandex.ru','user');
-INSERT INTO accounts (created_at,username,email,role) values (NOW(),'user2','user2@yandex.ru','user');
-INSERT INTO accounts (created_at,username,email,role) values (NOW(),'user3','user3@yandex.ru','user');

@@ -86,7 +86,9 @@ func (account *Account) Create() map[string]interface{} {
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(account.Password), bcrypt.DefaultCost)
 	account.Password = string(hashedPassword)
 	account.CodValid = u.GenCodeValid(6) //Creating a new code value
-	u.SendSmtp(account.Email, "Temporary confirmation code from API", "This is a confirmation code from API.\nUse it the next time you log in\n"+account.CodValid)
+
+	//	u.SendSmtp(account.Email, "Temporary confirmation code from API", "This is a confirmation code from API.\nUse it the next time you log in\n"+account.CodValid)
+
 	GetDB().Create(account)
 
 	if account.ID <= 0 {
@@ -108,7 +110,7 @@ func (account *Account) Create() map[string]interface{} {
 	//	account.Token = tokenString
 	account.Token = ""    //delete Token
 	account.Password = "" //delete password
-	response := u.Message(true, "Account has been created, Please confirm registration by sending a verification code at the next login.")
+	response := u.Message(true, "Account has been created, Please confirm registration by sending a verification cod_valid at the next login.")
 	response["account"] = account
 	return response
 }
