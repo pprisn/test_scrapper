@@ -26,7 +26,7 @@ func init() {
 	dbUri := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=disable password=%s", dbHost, username, dbName, password)
 	fmt.Println(dbUri)
 
-	conn, err := gorm.Open("scrapper", dbUri)
+	conn, err := gorm.Open("mysql", dbUri)
 	if err != nil {
 		fmt.Print(err)
 	}
