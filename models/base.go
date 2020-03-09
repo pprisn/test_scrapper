@@ -39,6 +39,11 @@ func init() {
 
 	db = conn
 	db.Debug().AutoMigrate(&Account{}, &Journal{}, &Urls{}, &Contact{})
+	db.Debug().AutoMigrate(&Journal{}).AddForeignKey("user_id", "accounts(id)", "RESTRICT", "RESTRICT")
+	db.Debug().AutoMigrate(&Journal{}).AddForeignKey("url_id", "urls(id)", "RESTRICT", "RESTRICT")
+	//    db.Model(&Journal{}).AddForeignKey("user_id", "accounts(id)","RESTRICT","RESTRICT")
+	//    db.Model(&Journal{}).AddForeignKey("url_id","urls(id)","RESTRICT","RESTRICT")
+
 }
 
 func GetDB() *gorm.DB {
