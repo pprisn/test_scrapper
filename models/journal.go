@@ -11,8 +11,8 @@ type Journal struct {
 	Name    string  `json:"name" gorm:"varchar(100)"`
 	Request string  `json:"request" gorm:"type:varchar(250);not null;"`
 	Timeout int     `json:"timeout"`
-	Account Account `gorm:"foreignkey:UserId;association_foreignkey:Id;"`
-	Urls    Urls    `gorm:"foreignkey:UrlId;association_foreignkey:Id;"`
+	Account Account `gorm:"foreignkey:UserId;"`
+	Urls    Urls    `gorm:"foreignkey:UrlId;"`
 	UrlId   uint    `json:"url_id"`
 	UserId  uint    `json:"user_id"` //ID of the user who submitted the request
 }
