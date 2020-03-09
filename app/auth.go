@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	m "github.com/pprisn/test_scrapper/motels"
+	m "github.com/pprisn/test_scrapper/models"
 	u "github.com/pprisn/test_scrapper/utils"
 )
 
