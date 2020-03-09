@@ -21,12 +21,12 @@ type Token struct {
 //a struct to rep user account
 type Account struct {
 	gorm.Model
-	Email    string `json:"email";gorm:"type:varchar(100);unique;not null"`
-	Password string `json:"password";gorm:"type:varchar(100)"`
+	Email    string `json:"email";sql:"type:varchar(100);unique;not null"`
+	Password string `json:"password";sql:"type:varchar(100)"`
 	Token    string `json:"token";sql:"-"`
-	CodValid string `json:"codvalid";gorm:"type:varchar(100)"`
-	UserName string `json:"username";gorm:"type:varchar(100);index:username"`
-	UserRole string `json:"userrole";gorm:"varchar(100);DEFAULT 'user'"`
+	CodValid string `json:"cod_valid";sql:"type:varchar(100)"`
+	UserName string `json:"user_name";sql:"type:varchar(100);index:username"`
+	UserRole string `json:"user_role";sql:"varchar(100);DEFAULT 'user'"`
 }
 
 //Validate incoming user details...

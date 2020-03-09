@@ -3,6 +3,7 @@ package models
 import (
 	//	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
