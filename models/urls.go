@@ -32,7 +32,7 @@ func (urls *Urls) Validate() (map[string]interface{}, bool) {
 }
 
 func (urls *Urls) Create() map[string]interface{} {
-	if resp, ok := Urls.Validate(); !ok {
+	if resp, ok := urls.Validate(); !ok {
 		return resp
 	}
 	GetDB().Create(urls)
