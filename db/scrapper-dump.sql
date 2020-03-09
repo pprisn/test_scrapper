@@ -37,7 +37,7 @@ CREATE TABLE `accounts` (
   UNIQUE KEY `email` (`email`),
   KEY `idx_accounts_deleted_at` (`deleted_at`),
   KEY `username` (`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (1,'2020-03-09 19:59:08',NULL,NULL,'pprisn@yandex.ru',NULL,NULL,NULL,'pprisn','admin'),(2,'2020-03-09 19:59:08',NULL,NULL,'user1@yandex.ru',NULL,NULL,NULL,'user1','user'),(3,'2020-03-09 19:59:08',NULL,NULL,'user2@yandex.ru',NULL,NULL,NULL,'user2','user'),(4,'2020-03-09 19:59:08',NULL,NULL,'user3@yandex.ru',NULL,NULL,NULL,'user3','user');
+INSERT INTO `accounts` VALUES (1,'2020-03-09 19:59:08','2020-03-09 21:38:52',NULL,'pprisn@yandex.ru','$2a$10$PHLPttQ4yfE9jVBJUni30OKApCRtVakQNmK8GrTPC97pgzY2EN2MW',NULL,'977267','pprisn','admin'),(2,'2020-03-09 19:59:08',NULL,NULL,'user1@yandex.ru',NULL,NULL,NULL,'user1','user'),(3,'2020-03-09 19:59:08',NULL,NULL,'user2@yandex.ru',NULL,NULL,NULL,'user2','user'),(4,'2020-03-09 19:59:08',NULL,NULL,'user3@yandex.ru',NULL,NULL,NULL,'user3','user'),(5,'2020-03-09 20:51:53','2020-03-09 20:51:53',NULL,'pprisn@mail.ru','$2a$10$PHLPttQ4yfE9jVBJUni30OKApCRtVakQNmK8GrTPC97pgzY2EN2MW','','660375','','user');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,4 +153,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-09 20:51:17
+-- Dump completed on 2020-03-09 23:00:41
