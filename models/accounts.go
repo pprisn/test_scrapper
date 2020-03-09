@@ -26,7 +26,7 @@ type Account struct {
 	Token    string `json:"token";sql:"-"`
 	CodValid string `json:"cod_valid" gorm:"type:varchar(100)"`
 	UserName string `json:"user_name" gorm:"type:varchar(100);index:username"`
-	UserRole string `json:"user_role" gorm:"varchar(100);DEFAULT 'user'"`
+	UserRole string `json:"user_role" gorm:"type:varchar(100);default:'user'"`
 }
 
 //Validate incoming user details...
