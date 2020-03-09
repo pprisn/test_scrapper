@@ -1,0 +1,4 @@
+.idea
+keys
+.env
+*.go_
