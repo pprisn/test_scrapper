@@ -175,6 +175,13 @@ func GetUser(u uint) *Account {
 	return acc
 }
 
+func GetRole(u uint) string {
+	acc := &Account{}
+	GetDB().Table("accounts").Where("id = ?", u).First(acc)
+	role := acc.UserRole
+	return role
+}
+
 func GetUsers() []*Account {
 	accs := make([]*Account, 0)
 	err := GetDB().Table("accounts").Find(&accs).Error

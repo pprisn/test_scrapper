@@ -33,10 +33,17 @@ var Authenticate = func(w http.ResponseWriter, r *http.Request) {
 }
 
 var GetUsers = func(w http.ResponseWriter, r *http.Request) {
-	data := m.GetUsers()
-	resp := u.Message(true, "success")
-	resp["data"] = data
-	u.Respond(w, resp)
+	id := r.Context().Value("user").(uint)
+	role := m.GetRole(id)
+	if role == "admin" {
+		data := m.GetUsers()
+		resp := u.Message(true, "success")
+		resp["data"] = data
+		u.Respond(w, resp)
+	} else {
+		resp := u.Message(false, "access denied")
+		u.Respond(w, resp)
+	}
 
 }
 
