@@ -138,8 +138,10 @@ func Login(email, password string, codevalid string) map[string]interface{} {
 		account.CodValid = u.GenCodeValid(6) //Creating a new code value
 		//Обновим значение CodValid в БД
 		GetDB().Model(account).Where("email = ?", email).Updates(Account{CodValid: account.CodValid})
-		u.SendSmtp(account.Email, "Temporary confirmation code from API", "This is a confirmation code from API.\nUse it the next time you log in\n"+account.CodValid)
-		return u.Message(false, "A verification code has been sent to you email, use it the next time you log in.")
+		//	u.SendSmtp(account.Email, "Temporary confirmation code from API", "This is a confirmation code from API.\nUse it the next time you log in\n"+account.CodValid)
+		resp := u.Message(false, "A verification cod_valid has been sent to you email, use it the next time you log in.")
+		resp["cod_valid"] = account.CodValid
+		return resp
 	}
 
 	//Worked! Logged In
