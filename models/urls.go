@@ -10,6 +10,7 @@ type Urls struct {
 	gorm.Model
 	Name    string `json:"name" gorm:"index:url_name"`
 	Timeout int    `json:"timeout"`
+        Stimeout string `json:"stimeout"`
 }
 
 /*
@@ -61,7 +62,7 @@ func GetUrls() []*Urls {
 	return urls
 }
 
-func UpdateTimeout(id uint, tm int) {
+func UpdateTimeout(id uint, tm int, stm string) {
 	urls := &Urls{}
 	err := GetDB().Table("urls").Where("id = ?", id).First(urls).Error
 	if err != nil {
@@ -70,6 +71,6 @@ func UpdateTimeout(id uint, tm int) {
 		}
 		return //u.Message(false, "Connection error. Please retry")
 	}
-	GetDB().Model(urls).Where("id = ?", id).Updates(Urls{Timeout: tm})
+	GetDB().Model(urls).Where("id = ?", id).Updates(Urls{Timeout: tm, Stimeout: stm})
 	return
 }

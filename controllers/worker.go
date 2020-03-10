@@ -70,7 +70,7 @@ var Worker = func() {
 	defer floger.Close()
 	log.SetOutput(floger)
 	t0 := time.Now()
-	log.Printf("СТАРТ %v %v \n", t0)
+	log.Printf("СТАРТ %v \n", t0)
 
 	ports := [2]string{"80", "443"}
 
@@ -156,6 +156,7 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 	req, _ := http.NewRequest("GET", "http://"+ip+":"+port, nil)
 	req.WithContext(ctx)
 	vStatus := ""
+	sStatus := ""
 	wg2.Add(1) //!required
 	go func() {
 		defer wg2.Done() //!required
@@ -179,7 +180,9 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 		//vStatus = jsElement(port) + "Error cancel context" + ":" + port + "\""
         	t1 := time.Now()
                 vStatus =  jsElement(port)+fmt.Sprintf("%d", t1.Sub(t0)) + "\""
+                sStatus =  "Str"+jsElement(port)+fmt.Sprintf("%v", t1.Sub(t0)) + "\""
 		dict.add(id, vStatus)
+		dict.add(id, sStatus)
 //		if *plog == "full" {
 //			log.Printf("%d\t%s:%s\t%s\n", id, ip, port, vStatus)
 //		}
@@ -194,9 +197,12 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 		} else {
                 t1 := time.Now()
                 vStatus = jsElement(port) + fmt.Sprintf("%d", t1.Sub(t0)) + "\""
+                sStatus =  "Str"+jsElement(port)+fmt.Sprintf("%v", t1.Sub(t0)) + "\""
 		}
 		//Добавим результат выполнения запроса Ответ сервера
 		dict.add(id, vStatus)
+		dict.add(id, sStatus)
+
 //		if *plog == "full" {
 //			log.Printf("%d\t%s:%s\t%s\n", id, ip, port, vStatus)
 //		}
