@@ -22,7 +22,7 @@ func jsElement(port string) string {
 	if "80" == port {
 		return "\"Status\": \""
 	} else if "443" == port {
-		return "\"Stats443\": \""
+		return "\"Status443\": \""
 	}
 	return "0"
 }
@@ -159,7 +159,6 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 	req, _ := http.NewRequest("GET", "http://"+ip+":"+port, nil)
 	req.WithContext(ctx)
 	vStatus := ""
-//	sStatus := ""
 	wg2.Add(1) //!required
 	go func() {
 		defer wg2.Done() //!required
@@ -196,7 +195,7 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 //		resp_ := ok.r
 		if err != nil {
 			//vStatus = jsElement(port) + "Error response" + ":" + port + "\""
-                          vStatus =  jsElement(port)+     "-1"+ "\""
+                         vStatus =  jsElement(port)+"-1"+ "\""
 //                        sStatus =  "\"StrStatus\": \"" +"-1"+ "\""
 		} else {
                 t1 := time.Now()
@@ -208,7 +207,6 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 		//Добавим результат выполнения запроса Ответ сервера
 		dict.add(id, vStatus)
 //		dict.add(id, sStatus)
-
 //		if *plog == "full" {
 //			log.Printf("%d\t%s:%s\t%s\n", id, ip, port, vStatus)
 //		}
