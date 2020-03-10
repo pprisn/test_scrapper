@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.29, for Linux (x86_64)
+-- MySQL dump 10.14  Distrib 5.5.60-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: scrapper
 -- ------------------------------------------------------
--- Server version	5.7.29-0ubuntu0.18.04.1
+-- Server version	5.5.60-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -127,7 +127,8 @@ CREATE TABLE `urls` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `timeout` int(11) DEFAULT NULL,
+  `timeout80` varchar(255) DEFAULT NULL,
+  `timeout443` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_urls_deleted_at` (`deleted_at`),
   KEY `url_name` (`name`)
@@ -140,7 +141,7 @@ CREATE TABLE `urls` (
 
 LOCK TABLES `urls` WRITE;
 /*!40000 ALTER TABLE `urls` DISABLE KEYS */;
-INSERT INTO `urls` VALUES (1,NULL,NULL,NULL,'google.com',NULL),(2,NULL,NULL,NULL,'gyoutube.com',NULL),(3,NULL,NULL,NULL,'gfacebook.com',NULL),(4,NULL,NULL,NULL,'gbaidu.com',NULL),(5,NULL,NULL,NULL,'gwikipedia.org',NULL),(6,NULL,NULL,NULL,'gqq.com',NULL),(7,NULL,NULL,NULL,'gtaobao.com',NULL),(8,NULL,NULL,NULL,'gyahoo.com',NULL),(9,NULL,NULL,NULL,'gtmall.com',NULL),(10,NULL,NULL,NULL,'gamazon.com',NULL),(11,NULL,NULL,NULL,'ggoogle.co.in',NULL),(12,NULL,NULL,NULL,'gtwitter.com',NULL),(13,NULL,NULL,NULL,'gsohu.com',NULL),(14,NULL,NULL,NULL,'gjd.com',NULL),(15,NULL,NULL,NULL,'glive.com',NULL),(16,NULL,NULL,NULL,'ginstagram.com',NULL),(17,NULL,NULL,NULL,'gsina.com.cn',NULL),(18,NULL,NULL,NULL,'gweibo.com',NULL),(19,NULL,NULL,NULL,'ggoogle.co.jp',NULL),(20,NULL,NULL,NULL,'greddit.com',NULL),(21,NULL,NULL,NULL,'gvk.com',NULL),(22,NULL,NULL,NULL,'g360.cn',NULL),(23,NULL,NULL,NULL,'glogin.tmall.com',NULL),(24,NULL,NULL,NULL,'gblogspot.com',NULL),(25,NULL,NULL,NULL,'gyandex.ru',NULL),(26,NULL,NULL,NULL,'ggoogle.com.hk',NULL),(27,NULL,NULL,NULL,'gnetflix.com',NULL),(28,NULL,NULL,NULL,'glinkedin.com',NULL),(29,NULL,NULL,NULL,'gpornhub.com',NULL),(30,NULL,NULL,NULL,'ggoogle.com.br',NULL),(31,NULL,NULL,NULL,'gtwitch.tv',NULL),(32,NULL,NULL,NULL,'gpages.tmall.com',NULL),(33,NULL,NULL,NULL,'gcsdn.net',NULL),(34,NULL,NULL,NULL,'gyahoo.co.jp',NULL),(35,NULL,NULL,NULL,'gmail.ru',NULL),(36,NULL,NULL,NULL,'galiexpress.com',NULL),(37,NULL,NULL,NULL,'galipay.com',NULL),(38,NULL,NULL,NULL,'goffice.com',NULL),(39,NULL,NULL,NULL,'ggoogle.fr',NULL),(40,NULL,NULL,NULL,'ggoogle.ru',NULL),(41,NULL,NULL,NULL,'ggoogle.co.uk',NULL),(42,NULL,NULL,NULL,'gmicrosoftonline.com',NULL),(43,NULL,NULL,NULL,'ggoogle.de',NULL),(44,NULL,NULL,NULL,'gebay.com',NULL),(45,NULL,NULL,NULL,'gmicrosoft.com',NULL),(46,NULL,NULL,NULL,'glivejasmin.com',NULL),(47,NULL,NULL,NULL,'gt.co',NULL),(48,NULL,NULL,NULL,'gbing.com',NULL),(49,NULL,NULL,NULL,'gxvideos.com',NULL),(50,NULL,NULL,NULL,'ggoogle.ca',NULL);
+INSERT INTO `urls` VALUES (1,NULL,'2020-03-10 16:48:40',NULL,'google.com','0','-1'),(2,NULL,'2020-03-10 16:48:40',NULL,'gyoutube.com','0','-1'),(3,NULL,'2020-03-10 16:48:40',NULL,'gfacebook.com','1','0'),(4,NULL,'2020-03-10 16:48:40',NULL,'gbaidu.com','60','-1'),(5,NULL,'2020-03-10 16:48:40',NULL,'gwikipedia.org','60','60'),(6,NULL,'2020-03-10 16:48:40',NULL,'gqq.com','1','-1'),(7,NULL,'2020-03-10 16:48:40',NULL,'gtaobao.com','1','60'),(8,NULL,'2020-03-10 16:48:40',NULL,'gyahoo.com','60','60'),(9,NULL,'2020-03-10 16:48:40',NULL,'gtmall.com','0','-1'),(10,NULL,'2020-03-10 16:48:40',NULL,'gamazon.com','1','-1'),(11,NULL,'2020-03-10 16:48:40',NULL,'ggoogle.co.in','0','60'),(12,NULL,'2020-03-10 16:48:40',NULL,'gtwitter.com','1','-1'),(13,NULL,'2020-03-10 16:48:40',NULL,'gsohu.com','1','-1'),(14,NULL,'2020-03-10 16:48:40',NULL,'gjd.com','1','60'),(15,NULL,'2020-03-10 16:48:40',NULL,'glive.com','0','60'),(16,NULL,'2020-03-10 16:48:40',NULL,'ginstagram.com','1','-1'),(17,NULL,'2020-03-10 16:48:40',NULL,'gsina.com.cn','1','60'),(18,NULL,'2020-03-10 16:48:40',NULL,'gweibo.com','7','-1'),(19,NULL,'2020-03-10 16:48:40',NULL,'ggoogle.co.jp','-1','-1'),(20,NULL,'2020-03-10 16:48:40',NULL,'greddit.com','-1','-1'),(21,NULL,'2020-03-10 16:48:40',NULL,'gvk.com','1','60'),(22,NULL,'2020-03-10 16:48:40',NULL,'g360.cn','60','3'),(23,NULL,'2020-03-10 16:48:40',NULL,'glogin.tmall.com','60','60'),(24,NULL,'2020-03-10 16:48:40',NULL,'gblogspot.com','1','-1'),(25,NULL,'2020-03-10 16:48:40',NULL,'gyandex.ru','0','-1'),(26,NULL,'2020-03-10 16:48:40',NULL,'ggoogle.com.hk','-1','-1'),(27,NULL,'2020-03-10 16:48:40',NULL,'gnetflix.com','0','-1'),(28,NULL,'2020-03-10 16:48:40',NULL,'glinkedin.com','0','60'),(29,NULL,'2020-03-10 16:48:40',NULL,'gpornhub.com','0','-1'),(30,NULL,'2020-03-10 16:48:40',NULL,'ggoogle.com.br','0','60'),(31,NULL,'2020-03-10 16:48:40',NULL,'gtwitch.tv','-1','60'),(32,NULL,'2020-03-10 16:48:40',NULL,'gpages.tmall.com','60','60'),(33,NULL,'2020-03-10 16:48:40',NULL,'gcsdn.net','-1','-1'),(34,NULL,'2020-03-10 16:48:40',NULL,'gyahoo.co.jp','-1','-1'),(35,NULL,'2020-03-10 16:48:40',NULL,'gmail.ru','-1','-1'),(36,NULL,'2020-03-10 16:48:40',NULL,'galiexpress.com','0','-1'),(37,NULL,'2020-03-10 16:48:40',NULL,'galipay.com','60','60'),(38,NULL,'2020-03-10 16:48:40',NULL,'goffice.com','1','1'),(39,NULL,'2020-03-10 16:48:40',NULL,'ggoogle.fr','0','-1'),(40,NULL,'2020-03-10 16:48:40',NULL,'ggoogle.ru','-1','-1'),(41,NULL,'2020-03-10 16:48:40',NULL,'ggoogle.co.uk','60','-1'),(42,NULL,'2020-03-10 16:48:40',NULL,'gmicrosoftonline.com','-1','-1'),(43,NULL,'2020-03-10 16:48:40',NULL,'ggoogle.de','0','-1'),(44,NULL,'2020-03-10 16:48:40',NULL,'gebay.com','1','-1'),(45,NULL,'2020-03-10 16:48:40',NULL,'gmicrosoft.com','-1','-1'),(46,NULL,'2020-03-10 16:48:40',NULL,'glivejasmin.com','-1','60'),(47,NULL,'2020-03-10 16:48:40',NULL,'gt.co','1','0'),(48,NULL,'2020-03-10 16:48:40',NULL,'gbing.com','1','60'),(49,NULL,'2020-03-10 16:48:40',NULL,'gxvideos.com','1','-1'),(50,NULL,'2020-03-10 16:48:40',NULL,'ggoogle.ca','1','-1');
 /*!40000 ALTER TABLE `urls` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -153,4 +154,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-09 23:00:41
+-- Dump completed on 2020-03-10 16:50:10
