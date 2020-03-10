@@ -84,9 +84,8 @@ var Worker = func() {
 			//rows.Scan(&id, &name)
                         id   = int(rows.ID)
                         name = rows.Name 
-
 			//		idstr = strconv.Itoa(id)
-			fmt.Printf("Scan rows id= %d  , name = %s \n", id, name)
+//			fmt.Printf("Scan rows id= %d  , name = %s \n", id, name)
 			for _, port := range ports {
 				wg2.Add(1) //!required
 				go func(id int, name string, port string) {
