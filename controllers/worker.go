@@ -120,6 +120,7 @@ var Worker = func() {
 		//! fmt.Println("Key:", k, "Value:", w.found[k])
 		var dat map[string]interface{}
 		err := json.Unmarshal([]byte("{ "+w.found[k]+" }"), &dat)
+                
 		if err != nil {
 			//!fmt.Printf("ErrorUnmarshal id = %d \t%s\n", k, "{ " + w.found[k] + " }")
 			continue
@@ -129,7 +130,7 @@ var Worker = func() {
 			   tm = -2
 			}
 			//m.db.Exec("UPDATE urls SET updated_at=NOW(), timeout=? WHERE id = ?",tm, k)
-			m.UpdateTimeout(uint(id),tm)
+			m.UpdateTimeout(uint(k), tm)
 			//!fmt.Printf("OK   Unmarshal id = %d \t%s\n", k, "{ " + w.found[k] + " }")
 		}
 	}
