@@ -4,14 +4,22 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-
+	"time"
 	"github.com/gorilla/mux"
 	a "github.com/pprisn/test_scrapper/app"
 	c "github.com/pprisn/test_scrapper/controllers"
 )
 
-func main() {
 
+func worker() {
+  for {
+    c.Worker()
+    time.Sleep(60 * time.Second)
+  }
+}
+
+func main() {
+        go worker()  
 	//Определим объект маршрутов
 	router := mux.NewRouter()
 	//Определим обработчики маршрутов

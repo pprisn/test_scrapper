@@ -1,0 +1,7 @@
+#!/bin/bash
+$TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEsImV4cCI6MTU4Mzc4NjU1NywiaXNzIjoidGVzdCJ9.SdmR8KB1vIyZN2sM_LKzomBmn7sws5MgRvbNyQUNQ0c
+curl -H 'Accept: application/json' -H "Authorization: Bearer ${TOKEN}" http://localhost:8000/api/admin/users
+
+#Response
+# {"data":[{"ID":1,"CreatedAt":"2020-03-09T19:59:08+03:00","UpdatedAt":"2020-03-09T21:38:52+03:00","DeletedAt":null,"email":"pprisn@yandex.ru","password":"$2a$10$PHLPttQ4yfE9jVBJUni30OKApCRtVakQNmK8GrTPC97pgzY2EN2MW","token":"","cod_valid":"977267","user_name":"pprisn","user_role":"admin"},{"ID":2,"CreatedAt":"2020-03-09T19:59:08+03:00","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null,"email":"user1@yandex.ru","password":"","token":"","cod_valid":"","user_name":"user1","user_role":"user"},{"ID":3,"CreatedAt":"2020-03-09T19:59:08+03:00","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null,"email":"user2@yandex.ru","password":"","token":"","cod_valid":"","user_name":"user2","user_role":"user"},{"ID":4,"CreatedAt":"2020-03-09T19:59:08+03:00","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null,"email":"user3@yandex.ru","password":"","token":"","cod_valid":"","user_name":"user3","user_role":"user"},{"ID":5,"CreatedAt":"2020-03-09T20:51:53+03:00","UpdatedAt":"2020-03-09T20:51:53+03:00","DeletedAt":null,"email":"pprisn@mail.ru","password":"$2a$10$PHLPttQ4yfE9jVBJUni30OKApCRtVakQNmK8GrTPC97pgzY2EN2MW","token":"","cod_valid":"660375","user_name":"","user_role":"user"}],"message":"success","status":true}
+

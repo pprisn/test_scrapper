@@ -1,3 +1,4 @@
+SET CHARASTER SET 'utf8'; SET collation_connection='utf8_general_ci';
 DROP TABLE IF EXISTS urls;
 CREATE TABLE urls (
    `id` int unsigned NOT NULL AUTO_INCREMENT, 

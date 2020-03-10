@@ -60,3 +60,16 @@ func GetUrls() []*Urls {
 
 	return urls
 }
+
+func UpdateTimeout(id uint, tm int) {
+	urls := &Urls{}
+	err := GetDB().Table("urls").Where("id = ?", id).First(urls).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return //u.Message(false, "Url address not found")
+		}
+		return //u.Message(false, "Connection error. Please retry")
+	}
+	GetDB().Model(urls).Where("id = ?", id).Updates(Urls{Timeout: tm})
+	return
+}
