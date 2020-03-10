@@ -72,7 +72,8 @@ var Worker = func() {
 	t0 := time.Now()
 	log.Printf("СТАРТ %v \n", t0)
 
-	ports := [2]string{"80", "443"}
+//	ports := [2]string{"80", "443"}
+	ports := [1]string{"80"}
 
 	var id int
 	var name string
