@@ -9,8 +9,8 @@ import (
 type Urls struct {
 	gorm.Model
 	Name    string `json:"name" gorm:"index:url_name"`
-	Timeout80  string `json:"timeout80"`
-        Timeout443 string `json:"timeout443"`
+	Timeout80  string `json:"timeout80" gorm:"type:varchar(10)"`
+        Timeout443 string `json:"timeout443" gorm:"type:varchar(10)"`
 }
 
 /*

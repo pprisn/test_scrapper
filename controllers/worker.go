@@ -115,6 +115,7 @@ var Worker = func() {
 	}
 	sort.Ints(keys)
 
+         var tm, stm string
 	// To perform the opertion you want
 	for _, k := range keys {
 		//! fmt.Println("Key:", k, "Value:", w.found[k])
@@ -126,13 +127,13 @@ var Worker = func() {
 			continue
 		} else {
                         //tm , err := strconv.Atoi(dat["Status"].(string))
-                        tm  := dat["Status"]
-                        stm := dat["Status443"]
+                        tm  = dat["Status"].(string)
+                        stm = dat["Status443"].(string)
 //			if err != nil {
 //			   tm  = -2
 //			}
 			//m.db.Exec("UPDATE urls SET updated_at=NOW(), timeout=? WHERE id = ?",tm, k)
-			m.UpdateTimeout(uint(k), tm.(string), stm.(string) )
+			m.UpdateTimeout(uint(k), tm, stm )
 			//!fmt.Printf("OK   Unmarshal id = %d \t%s\n", k, "{ " + w.found[k] + " }")
 		}
 	}
