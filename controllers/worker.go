@@ -126,11 +126,12 @@ var Worker = func() {
 			continue
 		} else {
                         tm , err := strconv.Atoi(dat["Status"].(string))
+                        stm := dat["StrStatus"]
 			if err != nil {
-			   tm = -2
+			   tm  = -2
 			}
 			//m.db.Exec("UPDATE urls SET updated_at=NOW(), timeout=? WHERE id = ?",tm, k)
-			m.UpdateTimeout(uint(k), tm)
+			m.UpdateTimeout(uint(k), tm, stm.(string) )
 			//!fmt.Printf("OK   Unmarshal id = %d \t%s\n", k, "{ " + w.found[k] + " }")
 		}
 	}
@@ -180,7 +181,7 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 		//vStatus = jsElement(port) + "Error cancel context" + ":" + port + "\""
         	t1 := time.Now()
                 vStatus =  jsElement(port)+fmt.Sprintf("%d", t1.Sub(t0)) + "\""
-                sStatus =  "Str"+jsElement(port)+fmt.Sprintf("%v", t1.Sub(t0)) + "\""
+                sStatus =   "\"StrStatus\": \"" +fmt.Sprintf("%v", t1.Sub(t0)) + "\""
 		dict.add(id, vStatus)
 		dict.add(id, sStatus)
 //		if *plog == "full" {
@@ -197,7 +198,7 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 		} else {
                 t1 := time.Now()
                 vStatus = jsElement(port) + fmt.Sprintf("%d", t1.Sub(t0)) + "\""
-                sStatus =  "Str"+jsElement(port)+fmt.Sprintf("%v", t1.Sub(t0)) + "\""
+                sStatus =   "\"StrStatus\": \"" +fmt.Sprintf("%v", t1.Sub(t0)) + "\""
 		}
 		//Добавим результат выполнения запроса Ответ сервера
 		dict.add(id, vStatus)
