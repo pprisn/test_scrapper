@@ -180,8 +180,8 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 		//Добавим результат выполнения запроса со статусом CancelContext
 		//key := id + ";" + port
 		//vStatus = jsElement(port) + "Error cancel context" + ":" + port + "\""
-        	t1 := time.Now()
-                d2, _ :=  time.ParseDuration(fmt.Sprintf("%v",t1.Sub(t0)))
+        	//t1 := time.Now()
+                //d2, _ :=  time.ParseDuration(fmt.Sprintf("%v",t1.Sub(t0)))
                 //vStatus = jsElement(port) +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
                 vStatus = jsElement(port) +"60" + "\""
 	//	m, _ := time.ParseDuration("1m30s")
