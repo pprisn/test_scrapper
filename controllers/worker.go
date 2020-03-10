@@ -78,11 +78,6 @@ var Worker = func() {
 	var name string
 		// Получить выборку
 		urls := m.GetUrls()
-	//	rows, err := &m.db.Raw("select id, name from urls").Rows()
-//		defer rows.Close()
-//		if err != nil {
-//			return
-//		}
 		i := 0
 		for _, rows:=range urls { //rows.Next() {
 			i = i + 1
@@ -118,7 +113,7 @@ var Worker = func() {
          var tm, stm string
 	// To perform the opertion you want
 	for _, k := range keys {
-		fmt.Println("Key:", k, "Value:", w.found[k])
+//		fmt.Println("Key:", k, "Value:", w.found[k])
 		var dat map[string]interface{}
 		err := json.Unmarshal([]byte("{ "+w.found[k]+" }"), &dat)
               
@@ -178,8 +173,6 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 		<-c // Wait for client.Do
 		//fmt.Printf("Cancel context, НЕ ДОЖДАЛИСЬ ОТВЕТА СЕРВЕРА на запрос %s\n", id)
 		//Добавим результат выполнения запроса со статусом CancelContext
-		//key := id + ";" + port
-		//vStatus = jsElement(port) + "Error cancel context" + ":" + port + "\""
         	//t1 := time.Now()
                 //d2, _ :=  time.ParseDuration(fmt.Sprintf("%v",t1.Sub(t0)))
                 //vStatus = jsElement(port) +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
@@ -191,24 +184,16 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 		return ctx.Err()
 	case ok := <-c:
 		err := ok.err
-//		resp_ := ok.r
 		if err != nil {
 			//vStatus = jsElement(port) + "Error response" + ":" + port + "\""
                          vStatus =  jsElement(port)+"-1"+ "\""
-//                        sStatus =  "\"StrStatus\": \"" +"-1"+ "\""
 		} else {
                 t1 := time.Now()
-//                d     :=  fmt.Sprintf("%d",t1.Sub(t0))
                 d2, _ :=  time.ParseDuration(fmt.Sprintf("%v",t1.Sub(t0)))
-     //           vStatus = jsElement(port) + d + "\""
                 vStatus = jsElement(port) +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
 		}
 		//Добавим результат выполнения запроса Ответ сервера
 		dict.add(id, vStatus)
-//		dict.add(id, sStatus)
-//		if *plog == "full" {
-//			log.Printf("%d\t%s:%s\t%s\n", id, ip, port, vStatus)
-//		}
 		//!		fmt.Printf("Server Response ID=%d port=%s Status=%s\n", id, port, vStatus)
 	} //select
 	return nil
