@@ -91,7 +91,7 @@ var Worker = func() {
                         name = rows.Name 
 
 			//		idstr = strconv.Itoa(id)
-			//			fmt.Printf("Scan nsis i= %d  id = %s , name = %s \n", i, id, name)
+			fmt.Printf("Scan rows id= %d  , name = %s \n", id, name)
 			for _, port := range ports {
 				wg2.Add(1) //!required
 				go func(id int, name string, port string) {
@@ -118,7 +118,7 @@ var Worker = func() {
          var tm, stm string
 	// To perform the opertion you want
 	for _, k := range keys {
-		//! fmt.Println("Key:", k, "Value:", w.found[k])
+		fmt.Println("Key:", k, "Value:", w.found[k])
 		var dat map[string]interface{}
 		err := json.Unmarshal([]byte("{ "+w.found[k]+" }"), &dat)
               
@@ -181,10 +181,9 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 		//key := id + ";" + port
 		//vStatus = jsElement(port) + "Error cancel context" + ":" + port + "\""
         	t1 := time.Now()
-//                d     :=  fmt.Sprintf("%d",t1.Sub(t0))
                 d2, _ :=  time.ParseDuration(fmt.Sprintf("%v",t1.Sub(t0)))
-     //           vStatus = jsElement(port) + d + "\""
-                vStatus = jsElement(port) +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
+                //vStatus = jsElement(port) +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
+                vStatus = jsElement(port) +"60" + "\""
 	//	m, _ := time.ParseDuration("1m30s")
 	//	fmt.Printf("Take off in t-%.0f seconds.", m.Seconds())
 		dict.add(id, vStatus)
