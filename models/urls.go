@@ -9,8 +9,8 @@ import (
 type Urls struct {
 	gorm.Model
 	Name    string `json:"name" gorm:"index:url_name"`
-	Timeout int    `json:"timeout"`
-        Stimeout string `json:"stimeout"`
+	Timeout80  string `json:"timeout80"`
+        Timeout443 string `json:"timeout443"`
 }
 
 /*
@@ -24,9 +24,9 @@ func (urls *Urls) Validate() (map[string]interface{}, bool) {
 		return u.Message(false, "Url name should be on the payload"), false
 	}
 
-	if urls.Timeout < 0 {
-		return u.Message(false, "Timeout should be on the payload"), false
-	}
+//	if urls.Timeout < 0 {
+//		return u.Message(false, "Timeout should be on the payload"), false
+//	}
 
 	//All the required parameters are present
 	return u.Message(true, "success"), true
@@ -62,7 +62,7 @@ func GetUrls() []*Urls {
 	return urls
 }
 
-func UpdateTimeout(id uint, tm int, stm string) {
+func UpdateTimeout(id uint, tm string, stm string) {
 	urls := &Urls{}
 	err := GetDB().Table("urls").Where("id = ?", id).First(urls).Error
 	if err != nil {
@@ -71,6 +71,6 @@ func UpdateTimeout(id uint, tm int, stm string) {
 		}
 		return //u.Message(false, "Connection error. Please retry")
 	}
-	GetDB().Model(urls).Where("id = ?", id).Updates(Urls{Timeout: tm, Stimeout: stm})
+	GetDB().Model(urls).Where("id = ?", id).Updates(Urls{Timeout80: tm, Timeout443: stm})
 	return
 }

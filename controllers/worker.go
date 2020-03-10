@@ -13,7 +13,6 @@ import (
 	"sort"
 	"sync"
 	"time"
-          "strconv"
 	m "github.com/pprisn/test_scrapper/models"
 //	u "github.com/pprisn/test_scrapper/utils"
 )
@@ -72,8 +71,8 @@ var Worker = func() {
 	t0 := time.Now()
 	log.Printf("СТАРТ %v \n", t0)
 
-//	ports := [2]string{"80", "443"}
-	ports := [1]string{"80"}
+	ports := [2]string{"80", "443"}
+//	ports := [1]string{"80"}
 
 	var id int
 	var name string
@@ -126,13 +125,14 @@ var Worker = func() {
 			log.Printf("ErrorUnmarshal id = %d \t%s\n", k, "{ " + w.found[k] + " }")
 			continue
 		} else {
-                        tm , err := strconv.Atoi(dat["Status"].(string))
-                        stm := dat["StrStatus"]
-			if err != nil {
-			   tm  = -2
-			}
+                        //tm , err := strconv.Atoi(dat["Status"].(string))
+                        tm  := dat["Status"]
+                        stm := dat["Status443"]
+//			if err != nil {
+//			   tm  = -2
+//			}
 			//m.db.Exec("UPDATE urls SET updated_at=NOW(), timeout=? WHERE id = ?",tm, k)
-			m.UpdateTimeout(uint(k), tm, stm.(string) )
+			m.UpdateTimeout(uint(k), tm.(string), stm.(string) )
 			//!fmt.Printf("OK   Unmarshal id = %d \t%s\n", k, "{ " + w.found[k] + " }")
 		}
 	}
@@ -158,7 +158,7 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 	req, _ := http.NewRequest("GET", "http://"+ip+":"+port, nil)
 	req.WithContext(ctx)
 	vStatus := ""
-	sStatus := ""
+//	sStatus := ""
 	wg2.Add(1) //!required
 	go func() {
 		defer wg2.Done() //!required
@@ -181,33 +181,32 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 		//key := id + ";" + port
 		//vStatus = jsElement(port) + "Error cancel context" + ":" + port + "\""
         	t1 := time.Now()
-                d     :=  fmt.Sprintf("%d",t1.Sub(t0))
+//                d     :=  fmt.Sprintf("%d",t1.Sub(t0))
                 d2, _ :=  time.ParseDuration(fmt.Sprintf("%v",t1.Sub(t0)))
-                vStatus = jsElement(port) + d + "\""
-                sStatus =  "\"StrStatus\": \"" +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
+     //           vStatus = jsElement(port) + d + "\""
+                vStatus = jsElement(port) +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
 	//	m, _ := time.ParseDuration("1m30s")
 	//	fmt.Printf("Take off in t-%.0f seconds.", m.Seconds())
-
 		dict.add(id, vStatus)
-		dict.add(id, sStatus)
+		//dict.add(id, sStatus)
 		return ctx.Err()
 	case ok := <-c:
 		err := ok.err
 //		resp_ := ok.r
 		if err != nil {
 			//vStatus = jsElement(port) + "Error response" + ":" + port + "\""
-                        vStatus =  jsElement(port)+     "-1"+ "\""
-                        sStatus =  "\"StrStatus\": \"" +"-1"+ "\""
+                          vStatus =  jsElement(port)+     "-1"+ "\""
+//                        sStatus =  "\"StrStatus\": \"" +"-1"+ "\""
 		} else {
                 t1 := time.Now()
-                d     :=  fmt.Sprintf("%d",t1.Sub(t0))
+//                d     :=  fmt.Sprintf("%d",t1.Sub(t0))
                 d2, _ :=  time.ParseDuration(fmt.Sprintf("%v",t1.Sub(t0)))
-                vStatus = jsElement(port) + d + "\""
-                sStatus =  "\"StrStatus\": \"" +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
+     //           vStatus = jsElement(port) + d + "\""
+                vStatus = jsElement(port) +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
 		}
 		//Добавим результат выполнения запроса Ответ сервера
 		dict.add(id, vStatus)
-		dict.add(id, sStatus)
+//		dict.add(id, sStatus)
 
 //		if *plog == "full" {
 //			log.Printf("%d\t%s:%s\t%s\n", id, ip, port, vStatus)
