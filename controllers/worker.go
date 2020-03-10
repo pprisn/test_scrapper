@@ -97,7 +97,7 @@ var Worker = func() {
 				go func(id int, name string, port string) {
 					defer wg2.Done() //!required
 					// Создание контекста с ограничением времени его жизни в 5 сек
-					ctx, cancel := context.WithTimeout(context.Background(), 40*time.Second)
+					ctx, cancel := context.WithTimeout(context.Background(), 50*time.Second)
 					defer cancel()
 					wg2.Add(1) //!required
 					go checkStatus(ctx, id, name, port, w, &wg2)
@@ -120,9 +120,9 @@ var Worker = func() {
 		//! fmt.Println("Key:", k, "Value:", w.found[k])
 		var dat map[string]interface{}
 		err := json.Unmarshal([]byte("{ "+w.found[k]+" }"), &dat)
-                
+              
 		if err != nil {
-			//!fmt.Printf("ErrorUnmarshal id = %d \t%s\n", k, "{ " + w.found[k] + " }")
+			log.Printf("ErrorUnmarshal id = %d \t%s\n", k, "{ " + w.found[k] + " }")
 			continue
 		} else {
                         tm , err := strconv.Atoi(dat["Status"].(string))
@@ -146,7 +146,7 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
         t0 := time.Now()
 	//Формируем структуру заголовков запроса ожидаем отклик до 4 сек
 	tr := &http.Transport{}
-	client := &http.Client{Transport: tr, Timeout: time.Duration(50 * time.Second)}
+	client := &http.Client{Transport: tr, Timeout: time.Duration(60 * time.Second)}
 	//client := &http.Client{Transport: tr}
 	// канал для распаковки данных anonymous struct to pack and unpack data in the channel
 	c := make(chan struct {
@@ -195,7 +195,8 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 //		resp_ := ok.r
 		if err != nil {
 			//vStatus = jsElement(port) + "Error response" + ":" + port + "\""
-                        vStatus =  jsElement(port)+"-1"+ "\""
+                        vStatus =  jsElement(port)+     "-1"+ "\""
+                        sStatus =  "\"StrStatus\": \"" +"-1"+ "\""
 		} else {
                 t1 := time.Now()
                 d     :=  fmt.Sprintf("%d",t1.Sub(t0))
