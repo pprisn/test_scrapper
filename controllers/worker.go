@@ -8,7 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	//"strconv"
+//	"strconv"
 	"reflect"
 	"sort"
 	"sync"
@@ -180,14 +180,15 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 		//key := id + ";" + port
 		//vStatus = jsElement(port) + "Error cancel context" + ":" + port + "\""
         	t1 := time.Now()
-                vStatus =  jsElement(port)+fmt.Sprintf("%d", t1.Sub(t0)) + "\""
-                sStatus =   "\"StrStatus\": \"" +fmt.Sprintf("%v", t1.Sub(t0)) + "\""
+                d     :=  fmt.Sprintf("%d",t1.Sub(t0))
+                d2, _ :=  time.ParseDuration(fmt.Sprintf("%v",t1.Sub(t0)))
+                vStatus = jsElement(port) + d + "\""
+                sStatus =  "\"StrStatus\": \"" +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
+	//	m, _ := time.ParseDuration("1m30s")
+	//	fmt.Printf("Take off in t-%.0f seconds.", m.Seconds())
+
 		dict.add(id, vStatus)
 		dict.add(id, sStatus)
-//		if *plog == "full" {
-//			log.Printf("%d\t%s:%s\t%s\n", id, ip, port, vStatus)
-//		}
-		//!		fmt.Printf("Server Response %d;%s  [%s]\n", id, port, vStatus)
 		return ctx.Err()
 	case ok := <-c:
 		err := ok.err
@@ -197,8 +198,10 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
                         vStatus =  jsElement(port)+"-1"+ "\""
 		} else {
                 t1 := time.Now()
-                vStatus = jsElement(port) + fmt.Sprintf("%d", t1.Sub(t0)) + "\""
-                sStatus =   "\"StrStatus\": \"" +fmt.Sprintf("%v", t1.Sub(t0)) + "\""
+                d     :=  fmt.Sprintf("%d",t1.Sub(t0))
+                d2, _ :=  time.ParseDuration(fmt.Sprintf("%v",t1.Sub(t0)))
+                vStatus = jsElement(port) + d + "\""
+                sStatus =  "\"StrStatus\": \"" +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
 		}
 		//Добавим результат выполнения запроса Ответ сервера
 		dict.add(id, vStatus)
