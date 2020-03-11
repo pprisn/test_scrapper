@@ -86,10 +86,11 @@ func UpdateTimeout(id uint, tm string, stm string) {
 
 func ReqUrlName(user uint, name string) *Urls {
 	urls := GetByNameUrl(name)
+        acc  := GetUser(user)
 	if urls != nil { //запрос не пустой
 		//err := GetDB().Table("urls").Where("name = ?", name).First(urls).Error
 		//запишем в журнал информацию об обращении
-		journal := &Journal{UserId: user, UrlId: urls.ID, Request: name, Name: "" }
+		journal := &Journal{UserId: user, UrlId: urls.ID, Request: name, Name: acc.Email }
 		resp :=journal.Create()
                 fmt.Printf("%v", resp)
 		//	if err != nil {
