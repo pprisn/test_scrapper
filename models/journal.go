@@ -10,7 +10,8 @@ type Journal struct {
 	gorm.Model
 	Name    string  `json:"name" gorm:"varchar(100)"`
 	Request string  `json:"request" gorm:"type:varchar(250);not null;"`
-	Timeout int     `json:"timeout"`
+	Timeout80  string   `json:"timeout" gorm:"type:varchar(10)"`
+	Timeout443 string   `json:"timeout" gorm:"type:varchar(10)"`
 	Account Account `gorm:"foreignkey:UserId;"`
 	Urls    Urls    `gorm:"foreignkey:UrlId;"`
 	UrlId   uint    `json:"url_id"`

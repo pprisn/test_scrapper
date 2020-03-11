@@ -26,9 +26,10 @@ func main() {
 	router.HandleFunc("/api/user/new", c.CreateAccount).Methods("POST")
 	router.HandleFunc("/api/user/login", c.Authenticate).Methods("POST")
 	router.HandleFunc("/api/contacts/new", c.CreateContact).Methods("POST")
-	router.HandleFunc("/api/me/contacts", c.GetContactsFor).Methods("GET") //  user/2/contacts
+	router.HandleFunc("/api/me/contacts", c.GetContactsFor).Methods("GET")  //  user/2/contacts
 	router.HandleFunc("/api/admin/users", c.GetUsers).Methods("GET")
 	router.HandleFunc("/api/admin/urls",  c.GetUrls).Methods("GET")
+	router.HandleFunc("/api/user/url",    c.GetUrl).Methods("POST")  //user/2/contacts
 	router.HandleFunc("/api/admin/update/users", c.UpdateAccount).Methods("POST") //служебная функция для административных изменений данных списка учетных записей
 
 	//Добавим требование запуска проверки middleware для объектов обработки маршрутов !
