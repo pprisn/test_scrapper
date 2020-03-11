@@ -51,6 +51,7 @@ func GetUrl(id uint) *Urls {
 	return urls
 }
 
+
 func GetUrls() []*Urls {
 	urls := make([]*Urls, 0)
 	err := GetDB().Table("urls").Find(&urls).Error

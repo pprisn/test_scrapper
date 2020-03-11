@@ -16,7 +16,12 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		adminAuth := []string{"/api/admin/users", "/api/auth/update/users", "/api/admin/urls", "/api/admin/journals"}
+		adminAuth := []string{
+		"/api/admin/users",
+		"/api/admin/update/users",
+		"/api/admin/urls", 
+		"/api/admin/journals"}
+
 		notAuth := []string{"/api/user/new", "/api/user/login"} //List of endpoints that doesn't require auth
 		requestPath := r.URL.Path                               //current request path
 
@@ -27,7 +32,6 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 				return
 			}
 		}
-
 		response := make(map[string]interface{})
 		tokenHeader := r.Header.Get("Authorization") //Grab the token from the header
 		if tokenHeader == "" {                       //Token is missing, returns with error code 403 Unauthorized
@@ -49,7 +53,11 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 
 		tokenPart := splitted[1] //Grab the token part, what we are truly interested in
 
-		if tokenPart == os.Getenv("token_admin") {
+
+		if tokenPart == os.Getenv("token_admin") { //можно все, если нет доступ далее регулируется полномочиями установленными in user_role
+			ctx := context.WithValue(r.Context(), "user", uint(1))
+			//Преобразуем даанные контекста ctx в структуру *Request
+			r = r.WithContext(ctx)
 			for _, value := range adminAuth {
 				if value == requestPath {
 					{
@@ -60,9 +68,10 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 			}
 		}
 
+
 		tk := &m.Token{}
 
-		token, err := jwt.ParseWithClaims(tokenPart, tk, func(token *jwt.Token) (interface{}, error) {
+        	token, err := jwt.ParseWithClaims(tokenPart, tk, func(token *jwt.Token) (interface{}, error) {
 			return []byte(os.Getenv("token_password")), nil
 		})
 

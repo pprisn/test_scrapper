@@ -8,13 +8,11 @@ import (
 	"log"
 	"net/http"
 	"os"
-//	"strconv"
 	"reflect"
 	"sort"
 	"sync"
 	"time"
 	m "github.com/pprisn/test_scrapper/models"
-//	u "github.com/pprisn/test_scrapper/utils"
 )
 
 
@@ -84,8 +82,6 @@ var Worker = func() {
 			//rows.Scan(&id, &name)
                         id   = int(rows.ID)
                         name = rows.Name 
-			//		idstr = strconv.Itoa(id)
-//			fmt.Printf("Scan rows id= %d  , name = %s \n", id, name)
 			for _, port := range ports {
 				wg2.Add(1) //!required
 				go func(id int, name string, port string) {
@@ -123,9 +119,6 @@ var Worker = func() {
                         //tm , err := strconv.Atoi(dat["Status"].(string))
                         tm  = dat["Status"].(string)
                         stm = dat["Status443"].(string)
-//			if err != nil {
-//			   tm  = -2
-//			}
 			//m.db.Exec("UPDATE urls SET updated_at=NOW(), timeout=? WHERE id = ?",tm, k)
 			m.UpdateTimeout(uint(k), tm, stm )
 			//!fmt.Printf("OK   Unmarshal id = %d \t%s\n", k, "{ " + w.found[k] + " }")

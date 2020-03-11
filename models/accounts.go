@@ -158,7 +158,6 @@ func Login(email, password string, codevalid string) map[string]interface{} {
 	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), tk)
 	tokenString, _ := token.SignedString([]byte(os.Getenv("token_password")))
 	account.Token = tokenString //Store the token in the response
-
 	resp := u.Message(true, "Logged In")
 	resp["account"] = account
 	return resp
