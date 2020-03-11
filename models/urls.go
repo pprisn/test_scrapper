@@ -89,7 +89,7 @@ func ReqUrlName(user uint, name string) *Urls {
 	if urls != nil { //запрос не пустой
 		//err := GetDB().Table("urls").Where("name = ?", name).First(urls).Error
 		//запишем в журнал информацию об обращении
-		journal := &Journal{UserId: user, UrlId: urls.ID, Name: name}
+		journal := &Journal{UserId: user, UrlId: urls.ID, Request: name, Name: "" }
 		journal.Create()
 		//	if err != nil {
 		//                //journal not save
