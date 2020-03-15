@@ -6,4 +6,4 @@ clean:
 	rm -rf $(TARGET)
 
 build:
-	go build -a -installsuffix cdo -o $(TARGET) .
+	go build -a -installsuffix cgo -o $(TARGET) .
