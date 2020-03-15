@@ -10,4 +10,5 @@ require (
 	github.com/joho/godotenv v1.3.0
 	golang.org/x/crypto v0.0.0-20200302210943-78000ba7a073
 	golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3
+	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 )

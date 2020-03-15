@@ -4,17 +4,16 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	m "github.com/pprisn/test_scrapper/models"
 	"golang.org/x/net/context"
 	"log"
 	"net/http"
-	"os"
+	//	"os"
 	"reflect"
 	"sort"
 	"sync"
 	"time"
-	m "github.com/pprisn/test_scrapper/models"
 )
-
 
 func jsElement(port string) string {
 	if "80" == port {
@@ -49,10 +48,6 @@ func (w *words) add(word int, WS string) {
 	w.found[word] = WorkStatus + "," + WS
 }
 
-//var (
-//	wg sync.WaitGroup
-//)
-
 var Worker = func() {
 	var wg2 sync.WaitGroup
 
@@ -60,42 +55,43 @@ var Worker = func() {
 	w := newWords()
 	//	var err error
 
-	floger, err := os.OpenFile("scrapper_work.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-			panic(err)
-	}
-	defer floger.Close()
-	log.SetOutput(floger)
+	//	floger, err := os.OpenFile("scrapper_work.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	//	if err != nil {
+	//			panic(err)
+	//	}
+	//	defer floger.Close()
+	//	log.SetOutput(floger)
+
 	t0 := time.Now()
 	log.Printf("СТАРТ %v \n", t0)
 
 	ports := [2]string{"80", "443"}
-//	ports := [1]string{"80"}
+	//	ports := [1]string{"80"}
 
 	var id int
 	var name string
-		// Получить выборку
-		urls := m.GetUrls()
-		i := 0
-		for _, rows:=range urls { //rows.Next() {
-			i = i + 1
-			//rows.Scan(&id, &name)
-                        id   = int(rows.ID)
-                        name = rows.Name 
-			for _, port := range ports {
+	// Получить выборку
+	urls := m.GetUrls()
+	i := 0
+	for _, rows := range urls { //rows.Next() {
+		i = i + 1
+		//rows.Scan(&id, &name)
+		id = int(rows.ID)
+		name = rows.Name
+		for _, port := range ports {
+			wg2.Add(1) //!required
+			go func(id int, name string, port string) {
+				defer wg2.Done() //!required
+				// Создание контекста с ограничением времени его жизни в 5 сек
+				ctx, cancel := context.WithTimeout(context.Background(), 50*time.Second)
+				defer cancel()
 				wg2.Add(1) //!required
-				go func(id int, name string, port string) {
-					defer wg2.Done() //!required
-					// Создание контекста с ограничением времени его жизни в 5 сек
-					ctx, cancel := context.WithTimeout(context.Background(), 50*time.Second)
-					defer cancel()
-					wg2.Add(1) //!required
-					go checkStatus(ctx, id, name, port, w, &wg2)
-					time.Sleep(8000 * time.Millisecond) //!reuired more then timeout
-				}(id, name, port)
+				go checkStatus(ctx, id, name, port, w, &wg2)
+				time.Sleep(8000 * time.Millisecond) //!reuired more then timeout
+			}(id, name, port)
 
-			}
 		}
+	}
 	wg2.Wait() //!required
 
 	// To store the keys in slice in sorted order
@@ -105,22 +101,22 @@ var Worker = func() {
 	}
 	sort.Ints(keys)
 
-         var tm, stm string
+	var tm, stm string
 	// To perform the opertion you want
 	for _, k := range keys {
-//		fmt.Println("Key:", k, "Value:", w.found[k])
+		//		fmt.Println("Key:", k, "Value:", w.found[k])
 		var dat map[string]interface{}
 		err := json.Unmarshal([]byte("{ "+w.found[k]+" }"), &dat)
-              
+
 		if err != nil {
-			log.Printf("ErrorUnmarshal id = %d \t%s\n", k, "{ " + w.found[k] + " }")
+			log.Printf("ErrorUnmarshal id = %d \t%s\n", k, "{ "+w.found[k]+" }")
 			continue
 		} else {
-                        //tm , err := strconv.Atoi(dat["Status"].(string))
-                        tm  = dat["Status"].(string)
-                        stm = dat["Status443"].(string)
+			//tm , err := strconv.Atoi(dat["Status"].(string))
+			tm = dat["Status"].(string)
+			stm = dat["Status443"].(string)
 			//m.db.Exec("UPDATE urls SET updated_at=NOW(), timeout=? WHERE id = ?",tm, k)
-			m.UpdateTimeout(uint(k), tm, stm )
+			m.UpdateTimeout(uint(k), tm, stm)
 			//!fmt.Printf("OK   Unmarshal id = %d \t%s\n", k, "{ " + w.found[k] + " }")
 		}
 	}
@@ -132,7 +128,7 @@ var Worker = func() {
 
 func checkStatus(ctx context.Context, id int, ip string, port string, dict *words, wg2 *sync.WaitGroup) error {
 	defer wg2.Done() //!required
-        t0 := time.Now()
+	t0 := time.Now()
 	//Формируем структуру заголовков запроса ожидаем отклик до 4 сек
 	tr := &http.Transport{}
 	client := &http.Client{Transport: tr, Timeout: time.Duration(60 * time.Second)}
@@ -165,12 +161,12 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 		<-c // Wait for client.Do
 		//fmt.Printf("Cancel context, НЕ ДОЖДАЛИСЬ ОТВЕТА СЕРВЕРА на запрос %s\n", id)
 		//Добавим результат выполнения запроса со статусом CancelContext
-        	//t1 := time.Now()
-                //d2, _ :=  time.ParseDuration(fmt.Sprintf("%v",t1.Sub(t0)))
-                //vStatus = jsElement(port) +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
-                vStatus = jsElement(port) +"60" + "\""
-	//	m, _ := time.ParseDuration("1m30s")
-	//	fmt.Printf("Take off in t-%.0f seconds.", m.Seconds())
+		//t1 := time.Now()
+		//d2, _ :=  time.ParseDuration(fmt.Sprintf("%v",t1.Sub(t0)))
+		//vStatus = jsElement(port) +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
+		vStatus = jsElement(port) + "60" + "\""
+		//	m, _ := time.ParseDuration("1m30s")
+		//	fmt.Printf("Take off in t-%.0f seconds.", m.Seconds())
 		dict.add(id, vStatus)
 		//dict.add(id, sStatus)
 		return ctx.Err()
@@ -178,11 +174,11 @@ func checkStatus(ctx context.Context, id int, ip string, port string, dict *word
 		err := ok.err
 		if err != nil {
 			//vStatus = jsElement(port) + "Error response" + ":" + port + "\""
-                         vStatus =  jsElement(port)+"-1"+ "\""
+			vStatus = jsElement(port) + "-1" + "\""
 		} else {
-                t1 := time.Now()
-                d2, _ :=  time.ParseDuration(fmt.Sprintf("%v",t1.Sub(t0)))
-                vStatus = jsElement(port) +fmt.Sprintf("%.0f",d2.Seconds()) + "\""
+			t1 := time.Now()
+			d2, _ := time.ParseDuration(fmt.Sprintf("%v", t1.Sub(t0)))
+			vStatus = jsElement(port) + fmt.Sprintf("%.0f", d2.Seconds()) + "\""
 		}
 		//Добавим результат выполнения запроса Ответ сервера
 		dict.add(id, vStatus)
