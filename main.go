@@ -15,10 +15,17 @@ import (
 )
 
 func worker() {
-	for {
-		c.Worker()
-		time.Sleep(60 * time.Second)
-	}
+
+ticker := time.NewTicker(time.Second *60)
+go func() {
+    for range ticker.C {
+	c.Worker()
+    }
+}()
+//	for {
+//		c.Worker()
+//		time.Sleep(60 * time.Second)
+//	}
 }
 
 func main() {
